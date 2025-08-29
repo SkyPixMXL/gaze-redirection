@@ -6,7 +6,7 @@ import dataclasses
 import math
 from typing import Tuple, Union
 
-VIDEO_INPUT = 0
+VIDEO_INPUT = 1
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_face_mesh = mp.solutions.face_mesh
@@ -98,8 +98,11 @@ def ty(image, list1):
                     )
                     if landmark_px:
                         idx_to_coordinates[idx] = landmark_px
-                for a in list1:
-                    list2.append(list(idx_to_coordinates[a]))
+                try:
+                    for a in list1:
+                        list2.append(list(idx_to_coordinates[a]))
+                except Exception:
+                    continue
                 return list2
 
 
@@ -151,6 +154,8 @@ for i in range(2):
     elif i == 1:
         listF = listL
     landmarks3 = ty(img, listF)
+    if landmarks3 is None:
+        continue
 
     points = np.array(landmarks3, np.int32)
 
@@ -231,8 +236,11 @@ while True:
                 )
 
                 cv2.fillConvexPoly(cropped_tr1_mask, points, 255)
+                img2 = img2.copy()
 
-                cv2.fillPoly(img2, [np.array(landmarks_points2)], (0, 0, 0))
+
+                cv2.fillPoly(img2, [np.array(landmarks_points2, np.int32)], (0, 0, 0))
+
                 tr2_pt1 = landmarks_points2[triangle_index[0]]
                 tr2_pt2 = landmarks_points2[triangle_index[1]]
                 tr2_pt3 = landmarks_points2[triangle_index[2]]
@@ -280,7 +288,7 @@ while True:
 
     result = cv2.add(img2, img2_new_face)
 
-    cv2.imshow("Video", result)
+    cv2.imshow("Video", cv2.flip(result, 1))
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
