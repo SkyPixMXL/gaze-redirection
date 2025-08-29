@@ -1,7 +1,7 @@
 # gaze-redirection
 ## 1. Clone the repository
 ```bash
-git clone https://github.com/SkyPixMXL/Dive_color_correction.git
+git clone https://github.com/SkyPixMXL/gaze-redirection.git
 cd Dive_color_correction
 ```
 ## 2. Create/activate a virtual environment and install the dependencies
