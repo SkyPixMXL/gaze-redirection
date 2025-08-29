@@ -7,7 +7,7 @@ cd gaze-redirection
 ## 2. Create/activate a virtual environment and install the dependencies
 On Linux / macOS:
 ```bash
-python3.10 -m venv gaze-env
+python3 -m venv gaze-env
 source gaze-env/bin/activate
 pip install -r requirements.txt
 ```
